@@ -1,0 +1,9 @@
+name = "energystoragedisease"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"
+
+# CF Pages deploy -> energystoragedisease.com
+# Build: npm run build
+# Output: dist
+# GitHub repo secrets:
+#   CLOUDFLARE_API_TOKEN  - CF API token with Pages:Edit permission
