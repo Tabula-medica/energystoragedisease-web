@@ -7,3 +7,7 @@ compatibility_date = "2026-01-01"
 # Output: dist
 # GitHub repo secrets:
 #   CLOUDFLARE_API_TOKEN  - CF API token with Pages:Edit permission
+
+[[kv_namespaces]]
+binding = "ESD_WAITLIST"
+id = "da94d048cf9a45ce88b096295c286f66"

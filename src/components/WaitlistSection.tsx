@@ -9,14 +9,26 @@ export default function WaitlistSection() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const [error, setError] = useState<string | null>(null)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
     setLoading(true)
-    // Placeholder — wire to backend or Mailchimp/ConvertKit
-    await new Promise((r) => setTimeout(r, 800))
-    setSubmitted(true)
-    setLoading(false)
+    setError(null)
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, track }),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setSubmitted(true)
+    } catch {
+      setError('Something went wrong — please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -86,6 +98,10 @@ export default function WaitlistSection() {
                 )}
               </button>
             </div>
+
+            {error && (
+              <p className="text-red-400 text-sm">{error}</p>
+            )}
 
             <p className="text-white/25 text-xs">
               No spam. No selling your data. Unsubscribe anytime. HIPAA-conscious by design.
