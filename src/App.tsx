@@ -7,6 +7,7 @@ import MythsVsTruth from './components/MythsVsTruth'
 import HomaIrCalculator from './components/HomaIrCalculator'
 import ResearchEvidence from './components/ResearchEvidence'
 import LabMarkers from './components/LabMarkers'
+import ReversalEvidence from './components/ReversalEvidence'
 import ForWhom from './components/ForWhom'
 import WaitlistSection from './components/WaitlistSection'
 import Footer from './components/Footer'
@@ -24,6 +25,7 @@ export default function App() {
         <HomaIrCalculator />
         <ResearchEvidence />
         <LabMarkers />
+        <ReversalEvidence />
         <ForWhom />
         <WaitlistSection />
       </main>
