@@ -20,6 +20,9 @@ export default function Footer() {
             <a href="#calculator" className="hover:text-white/70 transition-colors">
               HOMA-IR Calculator
             </a>
+            <a href="#labs" className="hover:text-white/70 transition-colors">
+              Lab Guide
+            </a>
             <a href="#research" className="hover:text-white/70 transition-colors">
               Research
             </a>

@@ -3,8 +3,8 @@ import { Menu, X } from 'lucide-react'
 
 const links = [
   { label: 'What Is ESD?', href: '#framework' },
-  { label: 'The Cascade', href: '#cascade' },
   { label: 'HOMA-IR', href: '#calculator' },
+  { label: 'Lab Guide', href: '#labs' },
   { label: 'Research', href: '#research' },
   { label: 'Myths', href: '#myths' },
   { label: 'Join Waitlist', href: '#waitlist' },
