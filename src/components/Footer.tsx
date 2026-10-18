@@ -17,6 +17,9 @@ export default function Footer() {
             <a href="#cascade" className="hover:text-white/70 transition-colors">
               The Cascade
             </a>
+            <a href="#calculator" className="hover:text-white/70 transition-colors">
+              HOMA-IR Calculator
+            </a>
             <a href="#myths" className="hover:text-white/70 transition-colors">
               Myths
             </a>

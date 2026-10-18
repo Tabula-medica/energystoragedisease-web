@@ -4,6 +4,7 @@ import ProblemSection from './components/ProblemSection'
 import EsdFramework from './components/EsdFramework'
 import TheCascade from './components/TheCascade'
 import MythsVsTruth from './components/MythsVsTruth'
+import HomaIrCalculator from './components/HomaIrCalculator'
 import ForWhom from './components/ForWhom'
 import WaitlistSection from './components/WaitlistSection'
 import Footer from './components/Footer'
@@ -18,6 +19,7 @@ export default function App() {
         <EsdFramework />
         <TheCascade />
         <MythsVsTruth />
+        <HomaIrCalculator />
         <ForWhom />
         <WaitlistSection />
       </main>

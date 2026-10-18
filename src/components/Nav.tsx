@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react'
 const links = [
   { label: 'What Is ESD?', href: '#framework' },
   { label: 'The Cascade', href: '#cascade' },
+  { label: 'HOMA-IR', href: '#calculator' },
   { label: 'Myths', href: '#myths' },
   { label: 'For Providers', href: '#providers' },
   { label: 'Join Waitlist', href: '#waitlist' },
