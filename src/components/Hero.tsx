@@ -14,7 +14,10 @@ export default function Hero() {
       />
 
       {/* Radial glow */}
-      <div className="absolute inset-0 bg-gradient-radial from-teal-500/10 via-transparent to-transparent" />
+      <div
+        className="absolute inset-0"
+        style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,191,165,0.08) 0%, transparent 70%)' }}
+      />
 
       <div className="relative max-w-6xl mx-auto px-4 py-24 text-center">
         <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/30 text-teal-400 text-sm font-medium px-4 py-2 rounded-full mb-8">

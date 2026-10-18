@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Calculator, AlertCircle, CheckCircle, TrendingUp, ArrowRight } from 'lucide-react'
+import { Calculator, AlertCircle, CheckCircle, TrendingUp, ArrowRight, Share2, Copy } from 'lucide-react'
 
 type GlucoseUnit = 'mgdl' | 'mmoll'
 type InsulinUnit = 'uiu' | 'pmol'
@@ -106,6 +106,7 @@ export default function HomaIrCalculator() {
   const [glucoseUnit, setGlucoseUnit] = useState<GlucoseUnit>('mgdl')
   const [insulinUnit, setInsulinUnit] = useState<InsulinUnit>('uiu')
   const [result, setResult] = useState<Result | null>(null)
+  const [copied, setCopied] = useState(false)
 
   const glucoseMgDl = toMgDl(parseFloat(glucose), glucoseUnit)
   const insulinUiu = toUiu(parseFloat(insulin), insulinUnit)
@@ -121,6 +122,18 @@ export default function HomaIrCalculator() {
     setGlucose('')
     setInsulin('')
     setResult(null)
+    setCopied(false)
+  }
+
+  const shareResult = async (r: Result) => {
+    const text = `My HOMA-IR score is ${r.homaIr} (${r.label}). HOMA-IR measures insulin resistance — the root mechanism of Energy Storage Disease. Learn more: https://energystoragedisease.com/#calculator`
+    if (navigator.share) {
+      await navigator.share({ title: 'My HOMA-IR Score', text }).catch(() => null)
+    } else {
+      await navigator.clipboard.writeText(text).catch(() => null)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    }
   }
 
   return (
@@ -277,6 +290,14 @@ export default function HomaIrCalculator() {
                   className="flex-1 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white font-medium py-3 rounded-xl transition-colors text-sm"
                 >
                   Recalculate
+                </button>
+                <button
+                  onClick={() => shareResult(result)}
+                  className="bg-white/5 hover:bg-white/10 text-white/50 hover:text-white px-4 py-3 rounded-xl transition-colors text-sm flex items-center gap-2"
+                  title="Share result"
+                >
+                  {copied ? <Copy size={14} className="text-teal-400" /> : <Share2 size={14} />}
+                  {copied ? 'Copied' : 'Share'}
                 </button>
                 <a
                   href="#waitlist"
