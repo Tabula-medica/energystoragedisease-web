@@ -44,6 +44,12 @@ export default function Footer() {
             <a href="/terms" className="hover:text-white/70 transition-colors">
               Terms
             </a>
+            <a href="/for-providers.html" className="hover:text-white/70 transition-colors">
+              For Providers
+            </a>
+            <a href="/flyer.html" className="hover:text-white/70 transition-colors">
+              Provider Flyer
+            </a>
           </div>
 
           <div className="text-white/20 text-xs text-center">
