@@ -29,8 +29,20 @@ export default function Footer() {
             <a href="#myths" className="hover:text-white/70 transition-colors">
               Myths
             </a>
+            <a href="#faq" className="hover:text-white/70 transition-colors">
+              FAQ
+            </a>
+            <a href="#download" className="hover:text-white/70 transition-colors">
+              Get the App
+            </a>
             <a href="#waitlist" className="hover:text-white/70 transition-colors">
               Join Waitlist
+            </a>
+            <a href="/privacy" className="hover:text-white/70 transition-colors">
+              Privacy
+            </a>
+            <a href="/terms" className="hover:text-white/70 transition-colors">
+              Terms
             </a>
           </div>
 

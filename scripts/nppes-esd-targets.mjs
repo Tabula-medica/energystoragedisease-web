@@ -12,12 +12,13 @@ import { writeFileSync } from 'fs';
 
 const NPPES = 'https://npiregistry.cms.hhs.gov/api/?version=2.1';
 
+// NPPES taxonomy_description expects text descriptions, not codes
 const TAXONOMIES = [
-  '207Q00000X',  // Family Medicine
-  '207R00000X',  // Internal Medicine
-  '207RE0101X',  // Endocrinology, Diabetes & Metabolism
-  '208D00000X',  // General Practice
-  '207QA0505X',  // Adult Medicine (Family)
+  'Family Medicine',
+  'Internal Medicine',
+  'Endocrinology, Diabetes & Metabolism',
+  'General Practice',
+  'Adult Medicine',
 ];
 
 const args = process.argv.slice(2);
@@ -26,13 +27,18 @@ const getArg = (flag, def) => {
   return i >= 0 ? args[i + 1] : def;
 };
 
-const STATE   = getArg('--state', 'VA');
-const LIMIT   = parseInt(getArg('--limit', '1000'), 10);
-const OUTFILE = getArg('--out', `providers-${STATE.toLowerCase()}-${new Date().toISOString().slice(0,10)}.csv`);
+const STATE      = getArg('--state', 'VA');
+const LIMIT      = parseInt(getArg('--limit', '2000'), 10);
+const MAX_SKIP   = parseInt(getArg('--max-skip', '5000'), 10); // cap per-taxonomy depth
+const OUTFILE    = getArg('--out', `esd-providers-${STATE.toLowerCase()}.csv`);
 
 async function fetchPage(taxonomy, skip = 0) {
   const url = `${NPPES}&taxonomy_description=${encodeURIComponent(taxonomy)}&state=${STATE}&limit=200&skip=${skip}&enumeration_type=NPI-1`;
   const r = await fetch(url);
+  if (r.status === 403) {
+    console.log(`\n  NPPES rate-limited at skip=${skip} for ${taxonomy} — stopping this taxonomy`);
+    return null; // signal to stop, don't throw
+  }
   if (!r.ok) throw new Error(`NPPES ${r.status} for ${taxonomy} skip=${skip}`);
   const json = await r.json();
   return json.results ?? [];
@@ -74,13 +80,14 @@ for (const taxonomy of TAXONOMIES) {
   let fetched;
   do {
     fetched = await fetchPage(taxonomy, skip);
+    if (fetched === null) break; // rate-limited — move to next taxonomy
     for (const p of fetched) {
       const npi = p.number;
       if (seen.has(npi)) continue;
       seen.add(npi);
 
       const fax = extractFax(p);
-      if (!fax) continue; // skip providers without fax
+      if (!fax) continue;
 
       const basic = p.basic ?? {};
       rows.push({
@@ -97,7 +104,7 @@ for (const taxonomy of TAXONOMIES) {
     }
     skip += 200;
     process.stdout.write(`\r  ${taxonomy}: ${rows.length} w/ fax so far...`);
-  } while (fetched.length === 200 && rows.length < LIMIT);
+  } while (fetched.length === 200 && rows.length < LIMIT && skip <= MAX_SKIP);
 }
 
 console.log(`\nTotal providers with fax: ${rows.length}`);
