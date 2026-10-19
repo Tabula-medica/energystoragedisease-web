@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Calculator, AlertCircle, CheckCircle, TrendingUp, ArrowRight, Share2, Copy } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Calculator, AlertCircle, CheckCircle, TrendingUp, TrendingDown, ArrowRight, Share2, Copy, Minus } from 'lucide-react'
 
 type GlucoseUnit = 'mgdl' | 'mmoll'
 type InsulinUnit = 'uiu' | 'pmol'
@@ -13,6 +13,31 @@ interface Result {
   borderColor: string
   description: string
   nextStep: string
+}
+
+interface HistoryEntry {
+  homaIr: number
+  level: Result['level']
+  label: string
+  date: string
+}
+
+const HISTORY_KEY = 'esd-homa-history'
+const MAX_HISTORY = 10
+
+function loadHistory(): HistoryEntry[] {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function saveHistory(entries: HistoryEntry[]) {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(entries.slice(-MAX_HISTORY)))
+  } catch {}
 }
 
 function getResult(homaIr: number): Result {
@@ -64,6 +89,16 @@ const BAR_RANGES = [
   { max: 8.0, label: 'Advanced', color: 'bg-red-500' },
 ]
 
+const LEVEL_COLOR: Record<Result['level'], string> = {
+  optimal: 'text-teal-400',
+  acceptable: 'text-green-400',
+  early: 'text-amber-400',
+  significant: 'text-orange-400',
+  severe: 'text-red-400',
+}
+
+const LEVEL_ORDER: Result['level'][] = ['optimal', 'acceptable', 'early', 'significant', 'severe']
+
 function ScaleBar({ value }: { value: number }) {
   const clampedPct = Math.min((value / 8.0) * 100, 100)
   return (
@@ -83,7 +118,6 @@ function ScaleBar({ value }: { value: number }) {
             <div key={r.label} className={`h-full ${r.color} opacity-40`} style={{ width: `${width}%` }} />
           )
         })}
-        {/* Marker */}
         <div
           className="absolute top-1/2 -translate-y-1/2 w-3 h-5 rounded-sm bg-white shadow-lg"
           style={{ left: `calc(${clampedPct}% - 6px)` }}
@@ -100,6 +134,23 @@ function ScaleBar({ value }: { value: number }) {
   )
 }
 
+function TrendIcon({ current, previous }: { current: number; previous: number }) {
+  const delta = current - previous
+  if (Math.abs(delta) < 0.1) return <Minus size={14} className="text-white/40" />
+  if (delta < 0) return <TrendingDown size={14} className="text-teal-400" />
+  return <TrendingUp size={14} className="text-orange-400" />
+}
+
+function HistoryRow({ entry, isLatest }: { entry: HistoryEntry; isLatest: boolean }) {
+  return (
+    <div className={`flex items-center justify-between py-2 border-b border-white/5 last:border-0 ${isLatest ? 'opacity-100' : 'opacity-60'}`}>
+      <span className="text-white/40 text-xs">{entry.date}</span>
+      <span className={`text-sm font-bold ${LEVEL_COLOR[entry.level]}`}>{entry.homaIr}</span>
+      <span className={`text-xs ${LEVEL_COLOR[entry.level]}`}>{entry.label}</span>
+    </div>
+  )
+}
+
 export default function HomaIrCalculator() {
   const [glucose, setGlucose] = useState('')
   const [insulin, setInsulin] = useState('')
@@ -107,6 +158,11 @@ export default function HomaIrCalculator() {
   const [insulinUnit, setInsulinUnit] = useState<InsulinUnit>('uiu')
   const [result, setResult] = useState<Result | null>(null)
   const [copied, setCopied] = useState(false)
+  const [history, setHistory] = useState<HistoryEntry[]>([])
+
+  useEffect(() => {
+    setHistory(loadHistory())
+  }, [])
 
   const glucoseMgDl = toMgDl(parseFloat(glucose), glucoseUnit)
   const insulinUiu = toUiu(parseFloat(insulin), insulinUnit)
@@ -115,7 +171,18 @@ export default function HomaIrCalculator() {
   const calculate = () => {
     if (!canCalculate) return
     const homaIr = (glucoseMgDl * insulinUiu) / 405
-    setResult(getResult(Math.round(homaIr * 100) / 100))
+    const r = getResult(Math.round(homaIr * 100) / 100)
+    setResult(r)
+
+    const entry: HistoryEntry = {
+      homaIr: r.homaIr,
+      level: r.level,
+      label: r.label,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    }
+    const updated = [...history, entry]
+    setHistory(updated)
+    saveHistory(updated)
   }
 
   const reset = () => {
@@ -135,6 +202,9 @@ export default function HomaIrCalculator() {
       setTimeout(() => setCopied(false), 2500)
     }
   }
+
+  const prevEntry = history.length >= 2 ? history[history.length - 2] : null
+  const showHistory = history.length > 1
 
   return (
     <section id="calculator" className="bg-navy-800 py-24">
@@ -238,6 +308,16 @@ export default function HomaIrCalculator() {
                 Both values must be from a fasting blood draw (8–12 hours fasting).
                 This calculator is for educational use only — not a diagnostic tool.
               </p>
+
+              {/* Prior history preview when on input screen */}
+              {showHistory && (
+                <div className="border-t border-white/5 pt-4">
+                  <p className="text-white/30 text-xs mb-3">Your recent readings (stored on this device)</p>
+                  {history.slice(-3).reverse().map((e, i) => (
+                    <HistoryRow key={i} entry={e} isLatest={i === 0} />
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-6">
@@ -245,9 +325,22 @@ export default function HomaIrCalculator() {
               <div className={`rounded-xl border p-6 text-center ${result.bgColor} ${result.borderColor}`}>
                 <p className="text-white/50 text-sm mb-1">Your HOMA-IR Score</p>
                 <p className={`text-6xl font-black mb-2 ${result.color}`}>{result.homaIr}</p>
-                <div className={`inline-block text-sm font-semibold px-3 py-1 rounded-full ${result.bgColor} ${result.color}`}>
+                <div className={`inline-flex items-center gap-2 text-sm font-semibold px-3 py-1 rounded-full ${result.bgColor} ${result.color}`}>
+                  {prevEntry && (
+                    <TrendIcon current={result.homaIr} previous={prevEntry.homaIr} />
+                  )}
                   {result.label}
                 </div>
+                {prevEntry && (
+                  <p className="text-white/30 text-xs mt-2">
+                    {result.homaIr < prevEntry.homaIr
+                      ? `↓ ${(prevEntry.homaIr - result.homaIr).toFixed(2)} improvement from last reading (${prevEntry.homaIr})`
+                      : result.homaIr > prevEntry.homaIr
+                      ? `↑ ${(result.homaIr - prevEntry.homaIr).toFixed(2)} increase from last reading (${prevEntry.homaIr})`
+                      : `No change from last reading (${prevEntry.homaIr})`
+                    }
+                  </p>
+                )}
               </div>
 
               {/* Scale bar */}
@@ -274,6 +367,22 @@ export default function HomaIrCalculator() {
                   </div>
                 </div>
               </div>
+
+              {/* History trend when ≥2 entries */}
+              {showHistory && (
+                <div className="bg-white/3 rounded-xl p-4">
+                  <p className="text-white/40 text-xs mb-3 font-medium uppercase tracking-wider">Your History (this device)</p>
+                  {history.slice(-5).reverse().map((e, i) => (
+                    <HistoryRow key={i} entry={e} isLatest={i === 0} />
+                  ))}
+                  {LEVEL_ORDER.indexOf(result.level) < LEVEL_ORDER.indexOf(history[history.length - 2]?.level ?? result.level) && (
+                    <p className="text-teal-400 text-xs mt-3">Your insulin resistance is improving. Keep going.</p>
+                  )}
+                  {LEVEL_ORDER.indexOf(result.level) > LEVEL_ORDER.indexOf(history[history.length - 2]?.level ?? result.level) && (
+                    <p className="text-amber-400 text-xs mt-3">Your insulin resistance has worsened. Review your lifestyle inputs with a provider.</p>
+                  )}
+                </div>
+              )}
 
               {/* ESD connection */}
               <div className="bg-white/3 rounded-xl p-4">
@@ -313,8 +422,7 @@ export default function HomaIrCalculator() {
 
         {/* Reference note */}
         <p className="text-white/20 text-xs text-center mt-4">
-          Reference: Matthews DR et al. (1985). HOMA-IR threshold ≥2.5 used in most population studies
-          for insulin resistance classification.
+          Reference: Matthews DR et al. (1985). Readings stored locally on your device only — no account required.
         </p>
       </div>
     </section>
