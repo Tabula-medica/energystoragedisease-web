@@ -135,9 +135,8 @@ function ScaleBar({ value }: { value: number }) {
 }
 
 function TrendIcon({ current, previous }: { current: number; previous: number }) {
-  const delta = current - previous
-  if (Math.abs(delta) < 0.1) return <Minus size={14} className="text-white/40" />
-  if (delta < 0) return <TrendingDown size={14} className="text-teal-400" />
+  if (current === previous) return <Minus size={14} className="text-white/40" />
+  if (current < previous) return <TrendingDown size={14} className="text-teal-400" />
   return <TrendingUp size={14} className="text-orange-400" />
 }
 
