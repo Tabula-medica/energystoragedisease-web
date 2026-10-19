@@ -9,6 +9,7 @@ import ResearchEvidence from './components/ResearchEvidence'
 import LabMarkers from './components/LabMarkers'
 import ReversalEvidence from './components/ReversalEvidence'
 import ForWhom from './components/ForWhom'
+import DownloadSection from './components/DownloadSection'
 import WaitlistSection from './components/WaitlistSection'
 import Footer from './components/Footer'
 
@@ -27,6 +28,7 @@ export default function App() {
         <LabMarkers />
         <ReversalEvidence />
         <ForWhom />
+        <DownloadSection />
         <WaitlistSection />
       </main>
       <Footer />

@@ -7,6 +7,7 @@ const links = [
   { label: 'Lab Guide', href: '#labs' },
   { label: 'Research', href: '#research' },
   { label: 'Myths', href: '#myths' },
+  { label: 'Get the App', href: '#download' },
   { label: 'Join Waitlist', href: '#waitlist' },
 ]
 
