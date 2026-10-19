@@ -312,7 +312,16 @@ export default function HomaIrCalculator() {
               {/* Prior history preview when on input screen */}
               {showHistory && (
                 <div className="border-t border-white/5 pt-4">
-                  <p className="text-white/30 text-xs mb-3">Your recent readings (stored on this device)</p>
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-white/30 text-xs">Your recent readings (stored on this device)</p>
+                    <button
+                      type="button"
+                      onClick={() => { saveHistory([]); setHistory([]) }}
+                      className="text-white/20 hover:text-red-400 text-xs transition-colors"
+                    >
+                      Clear history
+                    </button>
+                  </div>
                   {history.slice(-3).reverse().map((e, i) => (
                     <HistoryRow key={i} entry={e} isLatest={i === 0} />
                   ))}
@@ -371,7 +380,16 @@ export default function HomaIrCalculator() {
               {/* History trend when ≥2 entries */}
               {showHistory && (
                 <div className="bg-white/3 rounded-xl p-4">
-                  <p className="text-white/40 text-xs mb-3 font-medium uppercase tracking-wider">Your History (this device)</p>
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-white/40 text-xs font-medium uppercase tracking-wider">Your History (this device)</p>
+                    <button
+                      type="button"
+                      onClick={() => { saveHistory([]); setHistory([]); setResult(null) }}
+                      className="text-white/20 hover:text-red-400 text-xs transition-colors"
+                    >
+                      Clear
+                    </button>
+                  </div>
                   {history.slice(-5).reverse().map((e, i) => (
                     <HistoryRow key={i} entry={e} isLatest={i === 0} />
                   ))}
