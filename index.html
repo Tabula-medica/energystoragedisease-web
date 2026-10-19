@@ -76,6 +76,67 @@
     }
     </script>
 
+    <!-- Structured data: FAQPage (enables Google FAQ rich results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Energy Storage Disease?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Energy Storage Disease (ESD) is the root-cause name for what medicine calls Type 2 Diabetes. ESD names the underlying mechanism: a cascade of insulin resistance, metabolic inflexibility, chronic energy surplus, and mitochondrial dysfunction that begins 10–15 years before a diabetes diagnosis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is HOMA-IR and why does it matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) is calculated from fasting glucose × fasting insulin ÷ 405. A score below 1.5 indicates optimal insulin sensitivity. Unlike HbA1c, HOMA-IR can detect metabolic dysfunction 10–15 years before a diabetes diagnosis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Type 2 Diabetes really be reversed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The DiRECT trial (Lancet, 2018) showed 46% remission at 12 months with dietary intervention. Virta Health's 2-year data showed 60% remission through nutritional ketosis. Remission is defined as HbA1c below 6.5% without medication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What labs should I ask my doctor to order?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 6 key ESD markers: fasting insulin, HOMA-IR (calculated), TG:HDL ratio, fasting glucose, HbA1c, and uric acid. Ask specifically for a fasting insulin level — it is not included in standard metabolic panels."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Structured data: SoftwareApplication (iOS + Android app) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Energy Storage Disease",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "HealthApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "downloadUrl": "https://apps.apple.com/app/id6824261239",
+      "description": "Free HOMA-IR calculator, 6-marker lab guide, and reversal evidence. No account required. All data stays on your device.",
+      "screenshot": "https://energystoragedisease.com/og-image.png"
+    }
+    </script>
+
     <!-- Analytics (Plausible — privacy-first, no cookies) -->
     <script defer data-domain="energystoragedisease.com" src="https://plausible.io/js/script.js"></script>
 
