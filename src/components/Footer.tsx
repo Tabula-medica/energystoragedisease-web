@@ -44,10 +44,10 @@ export default function Footer() {
             <a href="/terms" className="hover:text-white/70 transition-colors">
               Terms
             </a>
-            <a href="/for-providers.html" className="hover:text-white/70 transition-colors">
+            <a href="/for-providers" className="hover:text-white/70 transition-colors">
               For Providers
             </a>
-            <a href="/flyer.html" className="hover:text-white/70 transition-colors">
+            <a href="/flyer" className="hover:text-white/70 transition-colors">
               Provider Flyer
             </a>
           </div>
