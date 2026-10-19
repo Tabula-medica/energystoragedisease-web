@@ -83,7 +83,12 @@
 
     /* Lab comparison */
     .lab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 36px; }
-    @media (max-width: 600px) { .lab-grid { grid-template-columns: 1fr; } .hero-stats { gap: 24px; } }
+    @media (max-width: 600px) {
+      .lab-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      .topbar { flex-wrap: wrap; row-gap: 10px; padding: 12px 16px; }
+      .topbar-nav { flex-wrap: wrap; gap: 10px 16px; }
+    }
     .lab-col { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
     .lab-col.esd { border-color: #86efac; background: var(--light); }
     .lab-col h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 14px; }
@@ -266,10 +271,10 @@
       <thead><tr><th>HOMA-IR Score</th><th>Interpretation</th><th>Typical Stage</th><th>Recommended Action</th></tr></thead>
       <tbody>
         <tr><td><span class="dot green"></span><strong>&lt; 1.0</strong></td><td>Optimal insulin sensitivity</td><td>Healthy metabolic function</td><td>Maintain — repeat in 2–3 yr</td></tr>
-        <tr><td><span class="dot green"></span><strong>1.0 – 1.5</strong></td><td>Good sensitivity</td><td>Low-risk</td><td>Lifestyle coaching, annual screen</td></tr>
-        <tr><td><span class="dot yellow"></span><strong>1.5 – 2.5</strong></td><td>Borderline resistance</td><td>Early ESD — subclinical</td><td>Intensive lifestyle; 6-mo recheck</td></tr>
-        <tr><td><span class="dot orange"></span><strong>2.5 – 3.5</strong></td><td>Moderate resistance</td><td>ESD active — pre-diabetes window</td><td>Structured dietary intervention + repeat labs</td></tr>
-        <tr><td><span class="dot red"></span><strong>&gt; 3.5</strong></td><td>Significant resistance</td><td>ESD advanced — diabetes risk high</td><td>Intensive program ± pharmacotherapy + endocrinology</td></tr>
+        <tr><td><span class="dot green"></span><strong>1.0 – &lt; 2.0</strong></td><td>Acceptable — normal range</td><td>Low-risk</td><td>Lifestyle coaching, annual screen</td></tr>
+        <tr><td><span class="dot yellow"></span><strong>2.0 – &lt; 3.0</strong></td><td>Early insulin resistance</td><td>Early ESD — subclinical</td><td>Intensive lifestyle; 6-mo recheck</td></tr>
+        <tr><td><span class="dot orange"></span><strong>3.0 – &lt; 5.0</strong></td><td>Significant insulin resistance</td><td>Significant ESD — pre-diabetes window</td><td>Structured dietary intervention + repeat labs</td></tr>
+        <tr><td><span class="dot red"></span><strong>≥ 5.0</strong></td><td>Advanced insulin resistance</td><td>ESD advanced — diabetes risk high</td><td>Intensive program ± pharmacotherapy + endocrinology</td></tr>
       </tbody>
     </table>
     <p style="font-size:12px; color:var(--muted); margin-bottom:36px;">HOMA-IR = (Fasting insulin [μIU/mL] × Fasting glucose [mg/dL]) ÷ 405. Use molar units for glucose if ordering SI labs: (Glucose [mmol/L] × Insulin [mIU/L]) ÷ 22.5</p>
@@ -335,14 +340,14 @@
         <div class="step-track"><div class="step-dot">2</div><div class="step-line"></div></div>
         <div class="step-body">
           <h4>Calculate HOMA-IR at the Encounter</h4>
-          <p>Use the free HOMA-IR calculator at <a href="https://energystoragedisease.com#calculator">energystoragedisease.com</a>, or in your EHR: <code>(Fasting insulin × Fasting glucose) ÷ 405</code>. Document as a structured note field. Target &lt; 1.5 for low risk.</p>
+          <p>Use the free HOMA-IR calculator at <a href="https://energystoragedisease.com#calculator">energystoragedisease.com</a>, or in your EHR: <code>(Fasting insulin × Fasting glucose) ÷ 405</code>. Document as a structured note field. Target &lt; 2.0 for acceptable sensitivity (&lt; 1.0 is optimal).</p>
         </div>
       </div>
       <div class="step">
         <div class="step-track"><div class="step-dot">3</div><div class="step-line"></div></div>
         <div class="step-body">
           <h4>Stage the Patient Using the ESD Framework</h4>
-          <p>HOMA-IR 1.5–2.5 = Early ESD; 2.5–3.5 = Active ESD; &gt;3.5 = Advanced ESD. Frame the diagnosis as Energy Storage Disease — patients understand the storage/overflow model better than abstract glucose thresholds. It increases engagement with lifestyle modification.</p>
+          <p>HOMA-IR 2.0–&lt;3.0 = Early ESD; 3.0–&lt;5.0 = Significant ESD; ≥5.0 = Advanced ESD. Scores below 2.0 are Optimal or Acceptable on the calculator. Frame the diagnosis as Energy Storage Disease — patients understand the storage/overflow model better than abstract glucose thresholds. It increases engagement with lifestyle modification.</p>
         </div>
       </div>
       <div class="step">
