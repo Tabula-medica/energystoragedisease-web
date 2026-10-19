@@ -25,7 +25,7 @@ const audiences = [
       'ESD-aware lab panel vs standard panel — what to order and why',
       'DiRECT 46% / Virta 60% reversal evidence, formatted for clinical use',
       '5-step protocol for integrating HOMA-IR into your practice workflow',
-      'Free patient app to prescribe — HOMA-IR calculator, on-device, no account',
+      'Free patient app to prescribe — HOMA-IR calculator + trend tracking, on-device, no account',
     ],
     cta: 'View Clinical Guide →',
     href: '/for-providers',
