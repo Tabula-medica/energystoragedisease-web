@@ -21,13 +21,14 @@ const audiences = [
     label: 'For Providers',
     headline: 'Reframe the conversation. Transform outcomes.',
     points: [
-      'Clinical ESD framework with evidence base for patient counseling',
-      'Metabolic biomarker panel recommendations beyond A1C',
-      'Dietary and lifestyle prescription protocols grounded in ESD science',
-      'Scripts for reframing "chronic disease management" as "remission potential"',
-      'CME-ready resources on insulin resistance, metabolic flexibility, and mitochondrial health',
+      'HOMA-IR reference table with 5 stages + recommended clinical actions',
+      'ESD-aware lab panel vs standard panel — what to order and why',
+      'DiRECT 46% / Virta 60% reversal evidence, formatted for clinical use',
+      '5-step protocol for integrating HOMA-IR into your practice workflow',
+      'Free patient app to prescribe — HOMA-IR calculator, on-device, no account',
     ],
-    cta: 'Join Waitlist — Provider Track',
+    cta: 'View Clinical Guide →',
+    href: '/for-providers',
   },
   {
     icon: BookOpen,
@@ -86,7 +87,7 @@ export default function ForWhom() {
                   ))}
                 </ul>
                 <a
-                  href="#waitlist"
+                  href={aud.href ?? '#waitlist'}
                   className="block text-center bg-navy-900 hover:bg-teal-600 text-white text-sm font-semibold px-4 py-3 rounded-xl transition-colors"
                 >
                   {aud.cta}
