@@ -12,12 +12,13 @@ import { writeFileSync } from 'fs';
 
 const NPPES = 'https://npiregistry.cms.hhs.gov/api/?version=2.1';
 
+// NPPES taxonomy_description expects text descriptions, not codes
 const TAXONOMIES = [
-  '207Q00000X',  // Family Medicine
-  '207R00000X',  // Internal Medicine
-  '207RE0101X',  // Endocrinology, Diabetes & Metabolism
-  '208D00000X',  // General Practice
-  '207QA0505X',  // Adult Medicine (Family)
+  'Family Medicine',
+  'Internal Medicine',
+  'Endocrinology, Diabetes & Metabolism',
+  'General Practice',
+  'Adult Medicine',
 ];
 
 const args = process.argv.slice(2);
