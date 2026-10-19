@@ -54,9 +54,9 @@ export default function DownloadSection() {
         {/* Feature callouts */}
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
           {[
-            { icon: '🧮', title: 'HOMA-IR Calculator', body: 'Enter fasting glucose + insulin for your risk score with 5-tier classification.' },
+            { icon: '🧮', title: 'HOMA-IR Calculator', body: 'Enter fasting glucose + insulin for your risk score with 5-tier classification and trend tracking across 10 readings.' },
             { icon: '🧪', title: '6-Marker Lab Guide', body: 'Exact thresholds + wording to request from your doctor.' },
-            { icon: '🔒', title: 'Private by Design', body: 'No account. No cloud. All data stored encrypted on your device.' },
+            { icon: '🔒', title: 'Private by Design', body: 'No account. No cloud. History stored encrypted on your device — never transmitted.' },
           ].map(f => (
             <div key={f.title} className="bg-white/5 rounded-xl p-5 border border-white/8">
               <div className="text-2xl mb-3">{f.icon}</div>
