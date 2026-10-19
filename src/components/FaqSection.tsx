@@ -8,7 +8,7 @@ const FAQS = [
   },
   {
     q: 'What is HOMA-IR and why does it matter?',
-    a: 'HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) is calculated from two fasting blood values: (fasting glucose × fasting insulin) ÷ 405. A score below 1.5 indicates optimal insulin sensitivity. Above 3.5 indicates significant insulin resistance. Unlike HbA1c, HOMA-IR can detect metabolic dysfunction 10–15 years before a diabetes diagnosis — while there is still ample opportunity to reverse the root disease.',
+    a: 'HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) is calculated from two fasting blood values: (fasting glucose × fasting insulin) ÷ 405. A score below 1.0 is optimal; below 2.0 is acceptable. Scores of 2.0–3.0 indicate early insulin resistance, 3.0–5.0 significant resistance, and above 5.0 advanced ESD. Unlike HbA1c, HOMA-IR can detect metabolic dysfunction 10–15 years before a diabetes diagnosis — while there is still ample opportunity to reverse the root disease.',
   },
   {
     q: 'Can Type 2 Diabetes really be reversed?',
