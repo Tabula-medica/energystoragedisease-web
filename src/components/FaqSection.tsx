@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: 'How does the app protect my privacy?',
-    a: 'The app requires no account and collects no personal data. Your HOMA-IR history is stored only in encrypted on-device storage (iOS Keychain / Android EncryptedSharedPreferences). The only network request the app makes is loading educational content from energystoragedisease.com — no data is ever sent from your device.',
+    a: 'The app requires no account and collects no personal data. Your HOMA-IR history is stored only in encrypted on-device storage (iOS Keychain / Android Keystore). The only network request the app makes is loading educational content from energystoragedisease.com — no data is ever sent from your device.',
   },
 ]
 
@@ -68,7 +68,7 @@ export default function FaqSection() {
           <p className="text-white/30 text-sm">
             More questions?{' '}
             <a
-              href="mailto:rajivka4@gmail.com"
+              href="mailto:info@energystoragedisease.com"
               className="text-teal-400 hover:text-teal-300 transition-colors"
             >
               Email us
